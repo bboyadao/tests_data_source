@@ -25,6 +25,8 @@ USER appuser
 RUN --mount=type=cache,target=/home/appuser/.cache/uv \
     uv sync --frozen --no-install-project
 COPY app /data_source/app
+USER root
+RUN chmod -R 755 /data_source
 USER appuser
 EXPOSE 8000
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--no-access-log", "--log-level", "info"]
